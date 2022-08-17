@@ -1,0 +1,72 @@
+
+using namespace std::rel_ops;
+
+template<class T>
+auto foo(T x, T y) -> decltype(x < y ? x : y)
+{
+    return x < y ? x : y;
+}
+
+struct bar{
+  int x = 0;
+  bar& operator++()
+    {
+        x++;
+        return *this;
+    }
+
+    bar operator++(int)
+    {
+        bar old = *this;
+        operator++();
+        return old;
+    }
+
+    bar& operator--()
+    {
+        x--;
+        return *this;
+    }
+
+    bar operator--(int)
+    {
+        bar old = *this;
+        operator--();
+        return old;
+    }
+};
+
+bool operator<(const bar& lh, const bar& rh){
+    return lh.x < rh.x;
+}
+
+bool operator==(const bar& lh, const bar& rh){
+    return lh.x == rh.x;
+}
+
+bool operator>(const bar& lh, const bar& rh)
+{
+    return std::rel_ops::operator>(lh, rh);
+}
+
+bool operator<=(const bar& lh, const bar& rh)
+{
+    return std::rel_ops::operator<=(lh, rh);
+}
+
+bool operator>=(const bar& lh, const bar& rh)
+{
+    return std::rel_ops::operator>=(lh, rh);
+}
+
+bool operator!=(const bar& lh, const bar& rh)
+{
+    return std::rel_ops::operator!=(lh, rh);
+}
+
+auto sum_to(int i){
+    if(i < 2)
+    return i;
+    else 
+     return sum_to(i-1) + 1;
+}
