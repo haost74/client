@@ -6,8 +6,13 @@
 
 int main(int argc, char * argv[]){
 
+    int i  = 1000;
+    while (i)
+    {
+        --i;
+        clientAsync::client client;
+    }
 
-    clientAsync::client client;
 
     return 0;
 }
