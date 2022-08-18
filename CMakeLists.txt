@@ -3,6 +3,43 @@ project(app LANGUAGES CXX)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
+
+# ------------------------------------------------------
+
+# BOOST_INCLUDEDIR C:\SDKs\boost_1_58_0\
+# BOOST_LIBRARYDIR C:\SDKs\boost_1_58_0\lib64-msvc-12.0
+# BOOST_ROOT C:\SDKs\boost_1_58_0\boost
+
+# C:\boost\boost_1_80_0
+
+# BOOST_LIBRARYDIR C:/local/boost_1_73_0/lib64-msvc-14.2
+
+# C:\boost\boost_1_80_0
+
+# The following directory should be added to linker library paths:
+
+#     C:\boost\boost_1_80_0\stage\lib
+
+set (Boost_DETAILED_FAILURE_MSG ON)
+set (Boost_THREADAPI win32)
+set (BOOST_ROOT "C:/boost/boost_1_80_0")
+set (Boost_LIBRARY_DIR  "C:/boost/boost_1_80_0/stage/lib")
+set (Boost_COMPILER "-vc")
+set (Boost_USE_STATIC_RUNTIME ON)  
+set (Boost_DEBUG ON)  #<---------- Real life saver
+set (Boost_USE_STATIC_RUNTIME ON)  
+set (Boost_DEBUG ON)
+
+set(Boost_USE_STATIC_LIBS ON)
+
+find_package(Boost REQUIRED)
+include_directories(${Boost_INCLUDE_DIR})
+
+if (Boost_FOUND)
+    include_directories (SYSTEM ${Boost_INCLUDE_DIR}) # подключаем заголовочные файлы
+    
+endif ()
+
 # -------------------------------------------------------
 
 find_package(Threads)
@@ -35,5 +72,7 @@ set (CLIENT_LIBRARIES client)
 add_executable(app main.cpp)
 target_link_libraries(app 
 	${JSONCPP_LIBRARIES} 
-	${CLIENT_LIBRARIES} 
+	${CLIENT_LIBRARIES}
+	${Boost_LIBRARY_DIR}
+	Boost::boost
 	Threads::Threads)
